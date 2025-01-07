@@ -1,13 +1,13 @@
 import {useUAtoCheckApp} from './common';
 
 export function isWechat() {
-    return useUAtoCheckApp('MicroMessenger');
+  return useUAtoCheckApp('MicroMessenger');
 }
 
 export function isQQ() {
-    return useUAtoCheckApp('QQ');
+  return useUAtoCheckApp('QQ');
 }
 
 export function isWeibo() {
-    return useUAtoCheckApp('WeiBo');
+  return useUAtoCheckApp('WeiBo');
 }
