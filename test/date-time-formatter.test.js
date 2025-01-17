@@ -34,7 +34,7 @@ test('count down 120s should be displayed as 00:00:02:00', () => {
   });
 });
 
-test('count down 7201s should be displayed as 02:00:01', () => {
+test('count down 7201s should be displayed as 00:02:00:01', () => {
   expect(formatCountdown(7201, 'dd:hh:mm:ss')).toStrictEqual({
     days: '00',
     hours: '02',
@@ -43,7 +43,7 @@ test('count down 7201s should be displayed as 02:00:01', () => {
   });
 });
 
-test('count down 100830s should be displayed as 28:30:02', () => {
+test('count down 100830s should be displayed as 01:04:02:02', () => {
   expect(formatCountdown(100922, 'dd:hh:mm:ss')).toStrictEqual({
     days: '01',
     hours: '04',
