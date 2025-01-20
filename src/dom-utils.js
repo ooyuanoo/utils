@@ -1,5 +1,5 @@
 /**
- * change document title
+ * @description change document title
  * @param title
  */
 export function changeDomTitle(title) {
@@ -26,4 +26,71 @@ export function changeDomTitle(title) {
 export function changeDomScrollTop(position) {
   document.documentElement.scrollTop = position;
   document.body.scrollTop = position;
+}
+
+/**
+ * @param prop
+ * @return {number}
+ */
+export function getScrollProp(prop) {
+  let bodyScrollProp = 0;
+  let documentScrollProp = 0;
+
+  if (document.body) {
+    bodyScrollProp = document.body[prop];
+  }
+
+  if (document.documentElement) {
+    documentScrollProp = document.documentElement[prop];
+  }
+
+  return bodyScrollProp > documentScrollProp ? bodyScrollProp : documentScrollProp;
+}
+
+/**
+ * @description get window height
+ * @return {number}
+ */
+export function getWindowHeight() {
+  if (document.compatMode === 'CSS1Compat') {
+    return document.documentElement.clientHeight;
+  }
+
+  return document.body.clientHeight;
+}
+
+/**
+ * @description check is in page bottom
+ * @param gap
+ * @return {boolean}
+ */
+export function isInBottom(gap) {
+  return getScrollProp('scrollTop') + getWindowHeight() + (gap || 0) >= getScrollProp('scrollHeight');
+}
+
+/**
+ * @description page visibility listener
+ */
+export function visibilitychangeListener(hiddenCallback, visibleCallback) {
+  let event;
+
+  if (document.visibilityState) {
+    event = 'visibilitychange';
+  } else if (document.webkitVisibilityState) {
+    event = 'webkitVisibilitychange';
+  } else if (document.mozVisibilityState) {
+    event = 'mozVisibilitychange';
+  } else {
+    event = document.oVisibilityState ? 'oVisibilitychange' : 'msVisibilitychange';
+  }
+
+  document.addEventListener(event, () => {
+    if (document.visibilityState === 'hidden') {
+      if (hiddenCallback) {
+        hiddenCallback();
+      }
+    } else if (visibleCallback) {
+      visibleCallback();
+    }
+  });
 }
