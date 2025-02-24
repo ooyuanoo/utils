@@ -94,3 +94,35 @@ export function visibilitychangeListener(hiddenCallback, visibleCallback) {
     }
   });
 }
+
+/**
+ * load script
+ */
+export function loadScript(url) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+
+    if (script.readyState) {
+      const readyState = script.readyState.toLocaleLowerCase();
+      script.onreadystatechange = () => {
+        if (/loaded|complete/.test(readyState)) {
+          resolve(script.readyState);
+        } else {
+          reject();
+        }
+      }
+    } else {
+      script.onload = () => {
+        resolve('loaded');
+      };
+
+      script.onerror = () => {
+        reject();
+      };
+    }
+
+    script.src = url;
+    document.body.appendChild(script);
+  })
+}
